@@ -1,0 +1,6 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "E:/xilinx/vivado_project/1/1.srcs/sources_1/new/gate.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module gate
+INFO: [VRFC 10-2263] Analyzing Verilog file "E:/xilinx/vivado_project/1/1.srcs/sim_1/new/test.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module test
+INFO: [VRFC 10-2263] Analyzing Verilog file "E:/xilinx/vivado_project/1/1.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module glbl
