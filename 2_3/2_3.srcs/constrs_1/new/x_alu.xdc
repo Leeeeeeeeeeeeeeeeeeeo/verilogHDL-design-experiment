@@ -1,27 +1,27 @@
-# ALUÉè¼Æ - Basys3Òı½ÅÔ¼ÊøÎÄ¼ş
+# ALUè®¾è®¡ - Basys3å¼•è„šçº¦æŸæ–‡ä»¶
 
-## ²Ù×÷ÂëÊäÈë
+## æ“ä½œç è¾“å…¥
 set_property PACKAGE_PIN T2 [get_ports {opcode[0]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {opcode[0]}]
 
 set_property PACKAGE_PIN R3 [get_ports {opcode[1]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {opcode[1]}]
 
-## ²Ù×÷ÊıaÊäÈë
+## æ“ä½œæ•°aè¾“å…¥
 set_property PACKAGE_PIN W13 [get_ports {a[0]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {a[0]}]
 
 set_property PACKAGE_PIN V2 [get_ports {a[1]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {a[1]}]
 
-## ²Ù×÷ÊıbÊäÈë
+## æ“ä½œæ•°bè¾“å…¥
 set_property PACKAGE_PIN W15 [get_ports {b[0]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {b[0]}]
 
 set_property PACKAGE_PIN V15 [get_ports {b[1]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {b[1]}]
 
-## ÔËËã½á¹ûÊä³ö
+## è¿ç®—ç»“æœè¾“å‡º
 set_property PACKAGE_PIN V14 [get_ports {out[0]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {out[0]}]
 

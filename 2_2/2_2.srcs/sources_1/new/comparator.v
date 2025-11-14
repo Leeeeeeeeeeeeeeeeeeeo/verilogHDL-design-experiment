@@ -11,12 +11,12 @@ module comparator(
 
 always @(*) begin
     if (!RST) begin
-        // Ê¹ÄÜÎÞÐ§Ê±£¬Êä³öÈ«0
+        // ä½¿èƒ½æ— æ•ˆæ—¶ï¼Œè¾“å‡ºå…¨0
         AGTB = 1'b0;
         AEQB = 1'b0;
         ALTB = 1'b0;
     end else begin
-        // Ê¹ÄÜÓÐÐ§Ê±£¬½øÐÐ±È½Ï
+        // ä½¿èƒ½æœ‰æ•ˆæ—¶ï¼Œè¿›è¡Œæ¯”è¾ƒ
         if (A > B) begin
             AGTB = 1'b1;
             AEQB = 1'b0;

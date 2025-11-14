@@ -1,7 +1,7 @@
-## ´ËÔ¼ÊøÎÄ¼şÊÊÓÃÓÚBasys3¿ª·¢°å (xc7a35tcpg236-1)
+## æ­¤çº¦æŸæ–‡ä»¶é€‚ç”¨äºBasys3å¼€å‘æ¿ (xc7a35tcpg236-1)
 
-## ÊäÈëĞÅºÅ - ²¦Âë¿ª¹Ø
-# I[7:0] ¶ÔÓ¦ SW7-SW0
+## è¾“å…¥ä¿¡å· - æ‹¨ç å¼€å…³
+# I[7:0] å¯¹åº” SW7-SW0
 set_property PACKAGE_PIN W13 [get_ports {I[7]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {I[7]}]
 
@@ -26,12 +26,12 @@ set_property IOSTANDARD LVCMOS33 [get_ports {I[1]}]
 set_property PACKAGE_PIN V17 [get_ports {I[0]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {I[0]}]
 
-# EN ¶ÔÓ¦ SW10
+# EN å¯¹åº” SW10
 set_property PACKAGE_PIN T2 [get_ports {EN}]
 set_property IOSTANDARD LVCMOS33 [get_ports {EN}]
 
-## Êä³öĞÅºÅ - LEDµÆ
-# Y[2:0] ¶ÔÓ¦ LD2-LD0
+## è¾“å‡ºä¿¡å· - LEDç¯
+# Y[2:0] å¯¹åº” LD2-LD0
 set_property PACKAGE_PIN U19 [get_ports {Y[2]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {Y[2]}]
 
@@ -41,10 +41,10 @@ set_property IOSTANDARD LVCMOS33 [get_ports {Y[1]}]
 set_property PACKAGE_PIN U16 [get_ports {Y[0]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {Y[0]}]
 
-# GS ¶ÔÓ¦ LD10
+# GS å¯¹åº” LD10
 set_property PACKAGE_PIN W3 [get_ports {GS}]
 set_property IOSTANDARD LVCMOS33 [get_ports {GS}]
 
-# GC ¶ÔÓ¦ LD11
+# GC å¯¹åº” LD11
 set_property PACKAGE_PIN U3 [get_ports {GC}]
 set_property IOSTANDARD LVCMOS33 [get_ports {GC}]

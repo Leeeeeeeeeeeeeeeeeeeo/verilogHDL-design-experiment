@@ -10,14 +10,14 @@ module encoder(
 
 always @(*) begin
     if (!EN) begin
-        // Ê¹ÄÜÎŞĞ§Ê±£¬Êä³öÈ«0
+        // ä½¿èƒ½æ— æ•ˆæ—¶ï¼Œè¾“å‡ºå…¨0
         Y = 3'b000;
         GS = 1'b0;
         GC = 1'b0;
     end else begin
-        // Ê¹ÄÜÓĞĞ§Ê±£¬°´ÓÅÏÈ¼¶±àÂë
+        // ä½¿èƒ½æœ‰æ•ˆæ—¶ï¼ŒæŒ‰ä¼˜å…ˆçº§ç¼–ç 
         casex (I)
-            8'b1xxxxxxx: begin Y = 3'b111; GS = 1'b1; GC = 1'b0; end  // I7×î¸ßÓÅÏÈ¼¶
+            8'b1xxxxxxx: begin Y = 3'b111; GS = 1'b1; GC = 1'b0; end  // I7æœ€é«˜ä¼˜å…ˆçº§
             8'b01xxxxxx: begin Y = 3'b110; GS = 1'b1; GC = 1'b0; end  // I6
             8'b001xxxxx: begin Y = 3'b101; GS = 1'b1; GC = 1'b0; end  // I5
             8'b0001xxxx: begin Y = 3'b100; GS = 1'b1; GC = 1'b0; end  // I4
@@ -25,7 +25,7 @@ always @(*) begin
             8'b000001xx: begin Y = 3'b010; GS = 1'b1; GC = 1'b0; end  // I2
             8'b0000001x: begin Y = 3'b001; GS = 1'b1; GC = 1'b0; end  // I1
             8'b00000001: begin Y = 3'b000; GS = 1'b1; GC = 1'b0; end  // I0
-            8'b00000000: begin Y = 3'b000; GS = 1'b0; GC = 1'b1; end  // ÎŞÊäÈë
+            8'b00000000: begin Y = 3'b000; GS = 1'b0; GC = 1'b1; end  // æ— è¾“å…¥
             default:     begin Y = 3'b000; GS = 1'b0; GC = 1'b0; end
         endcase
     end

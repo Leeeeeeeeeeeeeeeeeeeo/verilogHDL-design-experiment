@@ -1,31 +1,31 @@
-##  ‰»Î–≈∫≈ - ≤¶¬Îø™πÿ
-# A[1:0] ∂‘”¶ SW1, SW0
+## ËæìÂÖ•‰ø°Âè∑ - Êã®Á†ÅÂºÄÂÖ≥
+# A[1:0] ÂØπÂ∫î SW1, SW0
 set_property PACKAGE_PIN V16 [get_ports {A[0]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {A[0]}]
 
 set_property PACKAGE_PIN V17 [get_ports {A[1]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {A[1]}]
 
-# B[1:0] ∂‘”¶ SW3, SW2
+# B[1:0] ÂØπÂ∫î SW3, SW2
 set_property PACKAGE_PIN W17 [get_ports {B[0]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {B[0]}]
 
 set_property PACKAGE_PIN W16 [get_ports {B[1]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {B[1]}]
 
-# RST ∂‘”¶ SW5
+# RST ÂØπÂ∫î SW5
 set_property PACKAGE_PIN V15 [get_ports {RST}]
 set_property IOSTANDARD LVCMOS33 [get_ports {RST}]
 
-##  ‰≥ˆ–≈∫≈ - LEDµ∆
-# AGTB ∂‘”¶ LD0
+## ËæìÂá∫‰ø°Âè∑ - LEDÁÅØ
+# AGTB ÂØπÂ∫î LD0
 set_property PACKAGE_PIN U16 [get_ports {AGTB}]
 set_property IOSTANDARD LVCMOS33 [get_ports {AGTB}]
 
-# AEQB ∂‘”¶ LD1
+# AEQB ÂØπÂ∫î LD1
 set_property PACKAGE_PIN E19 [get_ports {AEQB}]
 set_property IOSTANDARD LVCMOS33 [get_ports {AEQB}]
 
-# ALTB ∂‘”¶ LD2
+# ALTB ÂØπÂ∫î LD2
 set_property PACKAGE_PIN U19 [get_ports {ALTB}]
 set_property IOSTANDARD LVCMOS33 [get_ports {ALTB}]

@@ -1,25 +1,25 @@
 `timescale 1ns / 1ps
 
-// ¶¨Òå²Ù×÷Ö¸Áî
-`define ADD     2'b00    // ÇóºÍ
-`define SUB     2'b01    // Ïà¼õ
-`define AND     2'b10    // ÓëÔËËã
-`define OR      2'b11    // »òÔËËã
+// å®šä¹‰æ“ä½œæŒ‡ä»¤
+`define ADD     2'b00    // æ±‚å’Œ
+`define SUB     2'b01    // ç›¸å‡
+`define AND     2'b10    // ä¸è¿ç®—
+`define OR      2'b11    // æˆ–è¿ç®—
 
 module alu(
-    input [1:0] opcode,  // ²Ù×÷Ö¸Áî
-    input [1:0] a,       // ²Ù×÷Êıa
-    input [1:0] b,       // ²Ù×÷Êıb
-    output reg [2:0] out // Êä³ö½á¹û
+    input [1:0] opcode,  // æ“ä½œæŒ‡ä»¤
+    input [1:0] a,       // æ“ä½œæ•°a
+    input [1:0] b,       // æ“ä½œæ•°b
+    output reg [2:0] out // è¾“å‡ºç»“æœ
 );
 
 always @(*) begin
     case (opcode)
-        `ADD: out = a + b;           // ÇóºÍ
-        `SUB: out = a - b;           // Ïà¼õ
-        `AND: out = {1'b0, a & b};   // ÓëÔËËã£¬À©Õ¹Îª3Î»
-        `OR:  out = {1'b0, a | b};   // »òÔËËã£¬À©Õ¹Îª3Î»
-        default: out = 3'b000;       // Ä¬ÈÏÊä³ö0
+        `ADD: out = a + b;           // æ±‚å’Œ
+        `SUB: out = a - b;           // ç›¸å‡
+        `AND: out = {1'b0, a & b};   // ä¸è¿ç®—ï¼Œæ‰©å±•ä¸º3ä½
+        `OR:  out = {1'b0, a | b};   // æˆ–è¿ç®—ï¼Œæ‰©å±•ä¸º3ä½
+        default: out = 3'b000;       // é»˜è®¤è¾“å‡º0
     endcase
 end
 
