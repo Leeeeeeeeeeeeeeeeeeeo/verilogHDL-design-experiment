@@ -63,14 +63,14 @@ module test();
         // 测试3: 无效数据+加法模式
         $display("\n=== 测试3: 无效数据12+加法模式（应置0）===");
         #5; S = 1; Load_Data = 4'b1100; Up_Down = 1;
-        #15;
-        $display("%0t\t%b\t%b\t%b\t%b\t%b\t%b\t%b\t置数前", 
-                 $time, R, S, Up_Down, Load_Data, Count, GS, GC);
+        #5;  // 缩短等待时间
+        $display("%0t\t%b\t%b\t%b\t%b\t%b\t%b\t%b\t置数信号设置后", 
+                $time, R, S, Up_Down, Load_Data, Count, GS, GC);
         @(posedge Clk);
         #5; S = 0;
         #15;
         $display("%0t\t%b\t%b\t%b\t%b\t%b\t%b\t%b\t置数后", 
-                 $time, R, S, Up_Down, Load_Data, Count, GS, GC);
+                $time, R, S, Up_Down, Load_Data, Count, GS, GC);
 
         // 测试4: 无效数据+减法模式  
         $display("\n=== 测试4: 无效数据12+减法模式（应置9）===");

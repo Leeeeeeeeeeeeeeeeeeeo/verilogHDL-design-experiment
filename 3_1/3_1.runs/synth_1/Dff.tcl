@@ -98,6 +98,8 @@ read_xdc /home/leo/vivado_project/3_1/3_1.srcs/constrs_1/new/x_dff.xdc
 set_property used_in_implementation false [get_files /home/leo/vivado_project/3_1/3_1.srcs/constrs_1/new/x_dff.xdc]
 
 set_param ips.enableIPCacheLiteLoad 1
+
+read_checkpoint -auto_incremental -incremental /home/leo/vivado_project/3_1/3_1.srcs/utils_1/imports/synth_1/Dff.dcp
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }

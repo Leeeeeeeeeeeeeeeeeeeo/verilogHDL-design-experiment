@@ -1,0 +1,14 @@
+#-----------------------------------------------------------
+# Vivado v2023.2 (64-bit)
+# SW Build 4029153 on Fri Oct 13 20:13:54 MDT 2023
+# IP Build 4028589 on Sat Oct 14 00:45:43 MDT 2023
+# SharedData Build 4025554 on Tue Oct 10 17:18:54 MDT 2023
+# Start of session at: Mon Nov 17 22:29:07 2025
+# Process ID: 9914
+# Current directory: /home/leo/vivado_project/3_2/3_2.runs/impl_1
+# Command line: vivado -log Dec_Add_Sub_CNTR.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source Dec_Add_Sub_CNTR.tcl -notrace
+# Log file: /home/leo/vivado_project/3_2/3_2.runs/impl_1/Dec_Add_Sub_CNTR.vdi
+# Journal file: /home/leo/vivado_project/3_2/3_2.runs/impl_1/vivado.jou
+# Running On: leo-virtual-machine, OS: Linux, CPU Frequency: 2995.201 MHz, CPU Physical cores: 8, Host memory: 8285 MB
+#-----------------------------------------------------------
+source Dec_Add_Sub_CNTR.tcl -notrace
