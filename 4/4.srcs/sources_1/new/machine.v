@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module machine(
+module vending_machine(
     input clk,
     input rstn,
     input [1:0] coin,
@@ -9,101 +9,89 @@ module machine(
 );
 
 // 状态定义
-// S0: IDLE    - 初始状态，0元
-// S1: GET05   - 已投0.5元
-// S2: GET10   - 已投1元  
-// S3: GET15   - 已投1.5元
+parameter IDLE  = 3'b000;
+parameter GET05 = 3'b001;
+parameter GET10 = 3'b010; 
+parameter GET15 = 3'b011;
+parameter SOLD0 = 3'b100;
+parameter SOLD1 = 3'b101;
 
-parameter S0 = 2'b00;  // IDLE
-parameter S1 = 2'b01;  // GET05
-parameter S2 = 2'b10;  // GET10
-parameter S3 = 2'b11;  // GET15
+// 状态寄存器
+reg [2:0] current_state;
+reg [2:0] next_state;
 
-reg [1:0] current_state;
-reg [1:0] next_state;
-
-// 第一段：状态寄存器（时序逻辑）
+// 第一段：时序逻辑，状态寄存器
 always @(posedge clk or negedge rstn) begin
-    if (!rstn) begin
-        current_state <= S0;
-    end else begin
+    if (!rstn)
+        current_state <= IDLE;
+    else
         current_state <= next_state;
-    end
 end
 
-// 第二段：状态转移逻辑（组合逻辑）
+// 第二段：组合逻辑，状态转移
 always @(*) begin
     case (current_state)
-        S0: begin  // IDLE
-            if (coin == 2'b01) begin        // 投入0.5元
-                next_state = S1;
-            end else if (coin == 2'b10) begin // 投入1元
-                next_state = S2;
-            end else begin
-                next_state = S0;
-            end
+        IDLE: begin
+            case (coin)
+                2'b01: next_state = GET05;  // 投入0.5元
+                2'b10: next_state = GET10;  // 投入1元
+                default: next_state = IDLE;
+            endcase
         end
         
-        S1: begin  // GET05
-            if (coin == 2'b01) begin        // 再投入0.5元
-                next_state = S2;
-            end else if (coin == 2'b10) begin // 再投入1元
-                next_state = S3;
-            end else begin
-                next_state = S1;
-            end
+        GET05: begin
+            case (coin)
+                2'b01: next_state = GET10;  // 再投0.5元，累计1元
+                2'b10: next_state = GET15;  // 再投1元，累计1.5元
+                default: next_state = GET05;
+            endcase
         end
         
-        S2: begin  // GET10
-            if (coin == 2'b01) begin        // 再投入0.5元
-                next_state = S3;
-            end else if (coin == 2'b10) begin // 再投入1元（达到2元）
-                next_state = S0;
-            end else begin
-                next_state = S2;
-            end
+        GET10: begin
+            case (coin)
+                2'b01: next_state = GET15;  // 再投0.5元，累计1.5元
+                2'b10: next_state = SOLD0;  // 再投1元，累计2元
+                default: next_state = GET10;
+            endcase
         end
         
-        S3: begin  // GET15
-            if (coin == 2'b01) begin        // 再投入0.5元（达到2元）
-                next_state = S0;
-            end else if (coin == 2'b10) begin // 再投入1元（达到2.5元）
-                next_state = S0;
-            end else begin
-                next_state = S3;
-            end
+        GET15: begin
+            case (coin)
+                2'b01: next_state = SOLD0;  // 再投0.5元，累计2元
+                2'b10: next_state = SOLD1;  // 再投1元，累计2.5元
+                default: next_state = GET15;
+            endcase
         end
         
-        default: next_state = S0;
+        SOLD0: next_state = IDLE;  // 出货完成后回到初始状态
+        SOLD1: next_state = IDLE;  // 出货完成后回到初始状态
+        
+        default: next_state = IDLE;
     endcase
 end
 
-// 第三段：输出逻辑（时序逻辑）
+// 第三段：时序逻辑，基于next_state预判输出
 always @(posedge clk or negedge rstn) begin
     if (!rstn) begin
         sell <= 1'b0;
         change <= 1'b0;
     end else begin
-        // 默认输出
-        sell <= 1'b0;
-        change <= 1'b0;
-        
-        case (current_state)
-            S2: begin  // GET10
-                if (coin == 2'b10) begin    // 投入1元达到2元，出货不找零
-                    sell <= 1'b1;
-                    change <= 1'b0;
-                end
+        // 根据下一个状态来决定输出
+        case (next_state)
+            SOLD0: begin
+                sell <= 1'b1;    // 预判下一个状态是SOLD0
+                change <= 1'b0;
             end
             
-            S3: begin  // GET15
-                if (coin == 2'b01) begin    // 投入0.5元达到2元，出货不找零
-                    sell <= 1'b1;
-                    change <= 1'b0;
-                end else if (coin == 2'b10) begin // 投入1元达到2.5元，出货并找零
-                    sell <= 1'b1;
-                    change <= 1'b1;
-                end
+            SOLD1: begin
+                sell <= 1'b1;    // 预判下一个状态是SOLD1
+                change <= 1'b1;
+            end
+            
+            default: begin
+                // 对于所有非SOLD状态，输出清零
+                sell <= 1'b0;
+                change <= 1'b0;
             end
         endcase
     end

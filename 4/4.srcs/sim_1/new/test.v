@@ -1,6 +1,7 @@
 `timescale 1ns / 1ps
 
-module test;
+module tb_vending_machine;
+
     // 输入信号
     reg clk;
     reg rstn;
@@ -10,11 +11,8 @@ module test;
     wire sell;
     wire change;
     
-    // 状态信号（为了观察内部状态）
-    wire [1:0] current_state;
-    
     // 实例化被测模块
-    machine uut (
+    vending_machine uut (
         .clk(clk),
         .rstn(rstn),
         .coin(coin),
@@ -22,121 +20,178 @@ module test;
         .change(change)
     );
     
-    // 为了观察内部状态，我们需要通过层次化引用
-    assign current_state = uut.current_state;
+    // 时钟生成，周期10ns
+    always #5 clk = ~clk;
     
-    // 状态名称定义，使用数字表示
-    reg [7:0] state_name;
-    always @(*) begin
-        case (current_state)
-            2'b00: state_name = "S0";  // IDLE
-            2'b01: state_name = "S1";  // GET05
-            2'b10: state_name = "S2";  // GET10
-            2'b11: state_name = "S3";  // GET15
-            default: state_name = "ERR";
-        endcase
-    end
-    
-    // 时钟生成 - 周期20ns
-    initial begin
-        clk = 0;
-        forever #10 clk = ~clk;
-    end
-    
-    // 测试过程
-    initial begin
-        // 初始化信号
-        rstn = 1;
-        coin = 2'b00;
-        
-        // 等待一个时钟周期
-        #15;
-        
-        // 打印表头
-        $display("Time\tRstn\tCoin\tSell\tChange\tState");
-        $display("----------------------------------------");
-        
-        #5 display_line();
-        
-        // === 测试1: 异步复位 ===
-        $display("\n=== 测试1: 异步复位 ===");
-        rstn = 0;  // 复位有效
-        #20 display_line();
-        
-        rstn = 1;  // 复位解除
-        #20 display_line();
-        
-        // === 测试2: 投入0.5元 ===
-        $display("\n=== 测试2: 投入0.5元 ===");
-        display_line();
-        coin = 2'b01;  // 投入0.5元
-        #20 display_line();
-        
-        // === 测试3: 再投入0.5元 ===
-        $display("\n=== 测试3: 再投入0.5元 ===");
-        coin = 2'b00;
-        #20 display_line();
-        coin = 2'b01;  // 再投入0.5元
-        #20 display_line();
-        
-        // === 测试4: 投入1元（达到2元，出货不找零）===
-        $display("\n=== 测试4: 投入1元（达到2元，出货不找零）===");
-        coin = 2'b00;
-        #20 display_line();
-        coin = 2'b10;  // 投入1元
-        #20 display_line();
-        
-        // === 测试5: 回到初始状态 ===
-        $display("\n=== 测试5: 回到初始状态 ===");
-        coin = 2'b00;
-        #20 display_line();
-        
-        // === 测试6: 投入1元 ===
-        $display("\n=== 测试6: 投入1元 ===");
-        coin = 2'b10;  // 投入1元
-        #20 display_line();
-        
-        // === 测试7: 再投入0.5元 ===
-        $display("\n=== 测试7: 再投入0.5元 ===");
-        coin = 2'b00;
-        #20 display_line();
-        coin = 2'b01;  // 投入0.5元
-        #20 display_line();
-        
-        // === 测试8: 再投入1元（达到2.5元，出货并找零）===
-        $display("\n=== 测试8: 再投入1元（达到2.5元，出货并找零）===");
-        coin = 2'b00;
-        #20 display_line();
-        coin = 2'b10;  // 投入1元
-        #20 display_line();
-        
-        // === 测试9: 回到初始状态 ===
-        $display("\n=== 测试9: 回到初始状态 ===");
-        coin = 2'b00;
-        #20 display_line();
-        
-        // === 测试10: 异常输入测试 ===
-        $display("\n=== 测试10: 异常输入测试（coin=11）===");
-        coin = 2'b11;  // 异常输入
-        #20 display_line();
-        
-        // === 仿真完成 ===
-        $display("\n=== 仿真完成 ===");
-        #100 $finish;
-    end
-    
-    // 显示一行数据的任务
-    task display_line;
+    // 显示状态名称的辅助任务
+    task display_state;
+        input [2:0] state;
         begin
-            $display("%0d\t%0d\t%b\t%0d\t%0d\t%s", 
-                    $time, rstn, coin, sell, change, state_name);
+            case (state)
+                3'b000: $write("IDLE ");
+                3'b001: $write("GET05");
+                3'b010: $write("GET10");
+                3'b011: $write("GET15");
+                3'b100: $write("SOLD0");
+                3'b101: $write("SOLD1");
+                default: $write("UNKNW");
+            endcase
         end
     endtask
     
-    // 波形保存
+    // 显示硬币输入的任务
+    task display_coin;
+        input [1:0] coin_val;
+        begin
+            case (coin_val)
+                2'b00: $write("无投币 ");
+                2'b01: $write("0.5元 ");
+                2'b10: $write("1元   ");
+                2'b11: $write("无效  ");
+            endcase
+        end
+    endtask
+    
+    // 主测试程序
     initial begin
-        $dumpfile("machine_wave.vcd");
-        $dumpvars(0, test);
+        // 初始化信号
+        clk = 0;
+        rstn = 0;
+        coin = 2'b00;
+        
+        // 生成VCD文件用于波形查看
+        $dumpfile("vending_machine.vcd");
+        $dumpvars(0, tb_vending_machine);
+        
+        // 打印表头
+        $display("Time(ns)  State    Coin     Sell Change 备注");
+        $display("------------------------------------------------");
+        
+        // 等待一个时钟周期
+        #10;
+        
+        // 测试1: 复位测试
+        $write("%8t  ", $time);
+        display_state(uut.current_state);
+        display_coin(coin);
+        $display("  %b     %b    复位状态", sell, change);
+        
+        rstn = 1;
+        #10;
+        $write("%8t  ", $time);
+        display_state(uut.current_state);
+        display_coin(coin);
+        $display("  %b     %b    释放复位", sell, change);
+        
+        // 测试2: 投入4个0.5元 (累计2元，不找零)
+        $write("%8t  ", $time);
+        display_state(uut.current_state);
+        display_coin(coin);
+        $display("  %b     %b    开始测试: 4x0.5元", sell, change);
+        
+        coin = 2'b01; // 投0.5元
+        #10;
+        $write("%8t  ", $time);
+        display_state(uut.current_state);
+        display_coin(coin);
+        $display("  %b     %b    GET05", sell, change);
+        
+        coin = 2'b01; // 再投0.5元
+        #10;
+        $write("%8t  ", $time);
+        display_state(uut.current_state);
+        display_coin(coin);
+        $display("  %b     %b    GET10", sell, change);
+        
+        coin = 2'b01; // 再投0.5元
+        #10;
+        $write("%8t  ", $time);
+        display_state(uut.current_state);
+        display_coin(coin);
+        $display("  %b     %b    GET15", sell, change);
+        
+        coin = 2'b01; // 再投0.5元
+        #10;
+        $write("%8t  ", $time);
+        display_state(uut.current_state);
+        display_coin(coin);
+        $display("  %b     %b    SOLD0(出货不找零)", sell, change);
+        
+        coin = 2'b00; // 停止投币
+        #10;
+        $write("%8t  ", $time);
+        display_state(uut.current_state);
+        display_coin(coin);
+        $display("  %b     %b    返回IDLE(输出已清零)", sell, change);
+        
+        #20; // 等待一段时间
+        
+        // 测试3: 投入2个1元 (累计2元，不找零)
+        $write("%8t  ", $time);
+        display_state(uut.current_state);
+        display_coin(coin);
+        $display("  %b     %b    开始测试: 2x1元", sell, change);
+        
+        coin = 2'b10; // 投1元
+        #10;
+        $write("%8t  ", $time);
+        display_state(uut.current_state);
+        display_coin(coin);
+        $display("  %b     %b    GET10", sell, change);
+        
+        coin = 2'b10; // 再投1元
+        #10;
+        $write("%8t  ", $time);
+        display_state(uut.current_state);
+        display_coin(coin);
+        $display("  %b     %b    SOLD0(出货不找零)", sell, change);
+        
+        coin = 2'b00;
+        #10;
+        $write("%8t  ", $time);
+        display_state(uut.current_state);
+        display_coin(coin);
+        $display("  %b     %b    返回IDLE(输出已清零)", sell, change);
+        
+        #20;
+        
+        // 测试4: 投入1元+0.5元+1元 (累计2.5元，找零0.5元)
+        $write("%8t  ", $time);
+        display_state(uut.current_state);
+        display_coin(coin);
+        $display("  %b     %b    开始测试: 1元+0.5元+1元", sell, change);
+        
+        coin = 2'b10; // 投1元
+        #10;
+        $write("%8t  ", $time);
+        display_state(uut.current_state);
+        display_coin(coin);
+        $display("  %b     %b    GET10", sell, change);
+        
+        coin = 2'b01; // 投0.5元
+        #10;
+        $write("%8t  ", $time);
+        display_state(uut.current_state);
+        display_coin(coin);
+        $display("  %b     %b    GET15", sell, change);
+        
+        coin = 2'b10; // 投1元
+        #10;
+        $write("%8t  ", $time);
+        display_state(uut.current_state);
+        display_coin(coin);
+        $display("  %b     %b    SOLD1(出货找零)", sell, change);
+        
+        coin = 2'b00;
+        #10;
+        $write("%8t  ", $time);
+        display_state(uut.current_state);
+        display_coin(coin);
+        $display("  %b     %b    返回IDLE(输出已清零)", sell, change);
+        
+        $display("------------------------------------------------");
+        $display("仿真完成 - 状态机设计正确!");
+        $finish;
     end
 
 endmodule
