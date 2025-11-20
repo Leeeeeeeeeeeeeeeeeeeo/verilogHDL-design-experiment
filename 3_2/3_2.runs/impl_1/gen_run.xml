@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GenRun Id="impl_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1763389718">
-  <File Type="POSTROUTE-PHYSOPT-RQS-RPT" Name="postroute_physopt_report_qor_suggestions_0.rpt"/>
   <File Type="ROUTE-DCP" Name="Dec_Add_Sub_CNTR_routed.dcp"/>
   <File Type="ROUTE-STATUS" Name="Dec_Add_Sub_CNTR_route_status.rpt"/>
   <File Type="ROUTE-PWR-RPX" Name="Dec_Add_Sub_CNTR_power_routed.rpx"/>
@@ -40,15 +39,15 @@
   <File Type="ROUTE-BUS-SKEW-RPX" Name="Dec_Add_Sub_CNTR_bus_skew_routed.rpx"/>
   <File Type="BITSTR-RBT" Name="Dec_Add_Sub_CNTR.rbt"/>
   <File Type="NPI_FILE" Name="Dec_Add_Sub_CNTR.npi"/>
+  <File Type="ROUTE-SIMILARITY" Name="Dec_Add_Sub_CNTR_incremental_reuse_routed.rpt"/>
   <File Type="BITSTR-NKY" Name="Dec_Add_Sub_CNTR.nky"/>
   <File Type="RBD_FILE" Name="Dec_Add_Sub_CNTR.rbd"/>
+  <File Type="ROUTE-CLK" Name="Dec_Add_Sub_CNTR_clock_utilization_routed.rpt"/>
   <File Type="BITSTR-BMM" Name="Dec_Add_Sub_CNTR_bd.bmm"/>
   <File Type="BITSTR-MMI" Name="Dec_Add_Sub_CNTR.mmi"/>
   <File Type="BITSTR-SYSDEF" Name="Dec_Add_Sub_CNTR.sysdef"/>
   <File Type="BITSTR-LTX" Name="debug_nets.ltx"/>
   <File Type="BITSTR-LTX" Name="Dec_Add_Sub_CNTR.ltx"/>
-  <File Type="ROUTE-SIMILARITY" Name="Dec_Add_Sub_CNTR_incremental_reuse_routed.rpt"/>
-  <File Type="ROUTE-CLK" Name="Dec_Add_Sub_CNTR_clock_utilization_routed.rpt"/>
   <File Type="ROUTE-BUS-SKEW" Name="Dec_Add_Sub_CNTR_bus_skew_routed.rpt"/>
   <File Type="OPT-DCP" Name="Dec_Add_Sub_CNTR_opt.dcp"/>
   <File Type="PLACE-DCP" Name="Dec_Add_Sub_CNTR_placed.dcp"/>
@@ -70,6 +69,7 @@
   <File Type="PL-PDI-FILE" Name="Dec_Add_Sub_CNTR_pld.pdi"/>
   <File Type="ROUTE-RQS" Name="Dec_Add_Sub_CNTR_routed.rqs"/>
   <File Type="ROUTE-RQS-RPT" Name="route_report_qor_suggestions_0.rpt"/>
+  <File Type="POSTROUTE-PHYSOPT-RQS-RPT" Name="postroute_physopt_report_qor_suggestions_0.rpt"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
     <Filter Type="Srcs"/>
     <File Path="$PSRCDIR/sources_1/new/Dec_Add_Sub_CNTR.v">

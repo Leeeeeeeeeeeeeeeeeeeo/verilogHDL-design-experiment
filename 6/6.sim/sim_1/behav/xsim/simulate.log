@@ -1,0 +1,55 @@
+Time resolution is 1 ps
+=== Seven Segment Display Simulation Started ===
+Target Display: 7484
+Clock: 100MHz, Scan: 200Hz, Refresh: 50Hz
+AN3=7, AN2=4, AN1=8, AN0=4
+
+Scan #1 at           2499995000:
+  digit_sel = 0
+  AN = 0111
+  SEG = 0001111
+  current_digit = 7
+  -> AN3 shows: 7 [CORRECT]
+
+Scan #2 at           7499995000:
+  digit_sel = 1
+  AN = 1011
+  SEG = 1001100
+  current_digit = 4
+  -> AN2 shows: 4 [CORRECT]
+
+=== Timing Verification ===
+Measured scan period: 5.000 ms (expected: 5ms)
+Refresh rate: 50.0 Hz (expected: 50Hz)
+
+Scan #3 at          12499995000:
+  digit_sel = 2
+  AN = 1101
+  SEG = 0000000
+  current_digit = 8
+  -> AN1 shows: 8 [CORRECT]
+
+Scan #4 at          17499995000:
+  digit_sel = 3
+  AN = 1110
+  SEG = 1001100
+  current_digit = 4
+  -> AN0 shows: 4 [CORRECT]
+
+Scan #5 at          22499995000:
+  digit_sel = 0
+  AN = 0111
+  SEG = 0001111
+  current_digit = 7
+  -> AN3 shows: 7 [CORRECT]
+
+Scan #6 at          27499995000:
+  digit_sel = 1
+  AN = 1011
+  SEG = 1001100
+  current_digit = 4
+  -> AN2 shows: 4 [CORRECT]
+
+
+=== Simulation Completed ===
+$finish called at time : 30 ms : File "/home/leo/vivado_project/6/6.srcs/sim_1/new/test.v" Line 46
